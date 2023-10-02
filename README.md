@@ -1,5 +1,5 @@
 # proyecto-jap
-Proyecto Jovenes a Programar del grupo 1 
+Proyecto Jovenes a Programar del grupo 1 - https://github.com/maxipz/proyecto-jap
 
 La Entrega 1,2,3 y 4 no se realizo mediante branchs,sino en repositorios individuales de manera manual. Dejo el mio como referencia: https://github.com/maxipz/proyecto-jovenes-a-programar
 
