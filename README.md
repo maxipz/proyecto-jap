@@ -7,12 +7,12 @@ A partir de la Entrega 5 se trabajara este repositorio mediante branchs y añadi
 
 
 
-Grupo 1 : Maximiliano Pereyra
-          Carlo Peña
-          Alejandro Erburo
-          Abigail Algibar
-          Lauro Fanjul 
-          Bruno Facello
-          Valentina Suarez
-          Mateo Brun
+Grupo 1 : Maximiliano Pereyra,
+          Carlo Peña,
+          Alejandro Erburo,
+          Abigail Algibar,
+          Lauro Fanjul, 
+          Bruno Facello,
+          Valentina Suarez,
+          Mateo Brun.
 
