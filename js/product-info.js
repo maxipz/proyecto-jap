@@ -29,19 +29,53 @@ function ObtenerInfo(ID) {
 
       const productosRelacionados = document.getElementById("productosRelacionados");
       productosRelacionados.innerHTML = `${mostrarProductoRelacionado(resultado)}`;
+
+
+      const addToCartButton = document.getElementById('addToCart');
+
+      addToCartButton.addEventListener('click', () => {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        //Guarda la info del producto en el localStorage
+        const productoActual = {
+          id: resultado.id,
+          name: resultado.name,
+          unitCost: resultado.cost,
+          currency: resultado.currency,
+          image: resultado.images[0]
+        };
+
+        const productoExistente = cart.find(item => item.id === productoActual.id);
+
+        if (productoExistente) {
+          // Si el producto existe, incrementa la cantidad
+          productoExistente.count += 1;
+        } else {
+          // Si el producto no existe, agrégalo al carrito
+          productoActual.count = 1;
+          cart.push(productoActual);
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Muestra una confirmación al usuario
+        alert('¡Producto agregado con éxito al carrito!');
+      });
+
+
+
     })
     .catch((error) => console.error("Ocurrió un error:", error));
 }
 
-function setProductID(id){
-  localStorage.setItem("productID", id );
+function setProductID(id) {
+  localStorage.setItem("productID", id);
   window.location = "product-info.html"
 }
 
-function mostrarProductos(productos){
+function mostrarProductos(productos) {
   let htmlContenedor = ''
-      productos.forEach(element => {
-      htmlContenedor += `
+  productos.forEach(element => {
+    htmlContenedor += `
       <div onclick='setProductID(${element.id})' class="list-group-item list-group-item-action cursor-active">
           <div class="row">
               <div class="col-3">
@@ -56,10 +90,10 @@ function mostrarProductos(productos){
               </div>
           </div>
       </div>
-      `  
-      })
-      return htmlContenedor  
-   }
+      `
+  })
+  return htmlContenedor
+}
 
 
 function mostrarImagenes(producto) {
@@ -72,8 +106,7 @@ function mostrarImagenes(producto) {
     const activeClass = index === 0 ? "active" : ""; // Agrega la clase 'active' al primer elemento
     contenedorImagenes += `
       <div class="carousel-item ${activeClass} text-center">
-        <img src="${element}" class="d-block mx-auto custom-image" alt="Imagen ${
-      index + 1}">
+        <img src="${element}" class="d-block mx-auto custom-image" alt="Imagen ${index + 1}">
         <div class="carousel-caption">
           <!-- Puedes agregar texto de la imagen si lo deseas -->
         </div>
@@ -163,9 +196,8 @@ function ObtenerComentarios(ID) {
         const li = document.createElement("li");
         li.innerHTML = `
             <div class="row-fluid border p-2">
-            <strong>${comentario.user}</strong> - ${
-          comentario.dateTime
-        } - ${starRating(comentario.score)} <br>
+            <strong>${comentario.user}</strong> - ${comentario.dateTime
+          } - ${starRating(comentario.score)} <br>
             ${comentario.description}</div>
 
           `;
