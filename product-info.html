@@ -33,14 +33,17 @@
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
           <div class="dropdown">
-            <a class="nav-link dropdown-toggle" type="button" id="userbutton" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" type="button" id="userbutton" data-bs-toggle="dropdown"
+              aria-expanded="false">
               Inicia sesión
-            </a> 
+            </a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <li><a class="dropdown-item" href="cart.html">Mi Carrito</a></li>
               <li><a class="dropdown-item" href="my-profile.html">Mi Perfil</a></li>
               <li><a class="dropdown-item" href="#" id="logOut">Cerrar sesión</a></li>
-              <li><hr class="dropdown-divider"></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
               <li><button id="color-mode" class="btn">Cambiar a Dark</button></li>
             </ul>
           </div>
@@ -50,56 +53,60 @@
   </nav>
   <main>
     <div class="container">
-      <div >
-        <br>  <h1 id="Titulo"></h1> 
+      <div>
+        <br>
+        <div class="d-flex justify-content-between mt-3">
+          <h1 id="Titulo"></h1>
+          <button id="addToCart">Agregar al carrito</button>
+        </div>
         <hr>
-        <h4 >Precio</h4> 
+        <h4>Precio</h4>
         <p id="Precio"></p>
       </div>
-      <div >
-        <h4>Descripcion</h4> 
+      <div>
+        <h4>Descripcion</h4>
         <p id="Descripcion"></p>
       </div>
-      <div >
+      <div>
         <h4>Categorías</h4>
         <p id="Categorias"></p>
       </div>
-      <div >
-        <h4>Cantidad de Vendidos</h4> 
+      <div>
+        <h4>Cantidad de Vendidos</h4>
         <p id="CantVendidos"></p>
       </div>
-      <div >
+      <div>
         <h4>Imagenes Ilustrativas</h4>
-        <div id="imagenes"></div>  
+        <div id="imagenes"></div>
       </div>
       <div>
         <h4>Comentarios</h4><br>
-        <ul  id="comentarios" style="list-style:none;"></ul>
-        <div class="option mt-4" >
+        <ul id="comentarios" style="list-style:none;"></ul>
+        <div class="option mt-4">
 
-          <form action=""id ="envioComentario">
-          <h4>Comentar</h4>
-          <label for="TuOpinion">Tu opinion:</label><br>
-          <textarea name="MiOpinion" id="miOpinion" cols="80" rows="3"></textarea><br>
-          <label for="puntuacion">Tu puntuacion</label><br>
-          <select style="padding: 8px;padding-right: 80px;" name="MiPuntuacion" id="miPuntuacion" >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5 </option>
-          </select><br><br>
-          <input type="submit" id="enviar" value="Enviar">
-        </form>
-        <div>
-          <h4>Productos Relacionados</h4>
-          <div id="productosRelacionados"></div>
-        </div>
+          <form action="" id="envioComentario">
+            <h4>Comentar</h4>
+            <label for="TuOpinion">Tu opinion:</label><br>
+            <textarea name="MiOpinion" id="miOpinion" cols="80" rows="3"></textarea><br>
+            <label for="puntuacion">Tu puntuacion</label><br>
+            <select style="padding: 8px;padding-right: 80px;" name="MiPuntuacion" id="miPuntuacion">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5 </option>
+            </select><br><br>
+            <input type="submit" id="enviar" value="Enviar">
+          </form>
+          <div>
+            <h4>Productos Relacionados</h4>
+            <div id="productosRelacionados"></div>
+          </div>
         </div>
       </div>
     </div>
 
-  </div>
+    </div>
 
   </main>
   <footer class="text-muted">
@@ -107,7 +114,8 @@
       <p class="float-end">
         <a href="#">Volver arriba</a>
       </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+      </p>
     </div>
   </footer>
   <div id="spinner-wrapper">

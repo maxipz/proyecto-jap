@@ -366,3 +366,10 @@ a.custom-card:hover {
   padding: 5px;
   margin-left: 1px;
 }
+
+#addToCart {
+  background-color: #4CAF50; 
+  color: white; 
+  border-radius: 5px;
+  border-color: #4CAF50;
+}
