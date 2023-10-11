@@ -67,7 +67,41 @@
       </thead>
       <tbody id="product-table-body">
       </tbody>
-    </table>
+    </table> 
+
+    <div class="shippingType">
+      <p class="shippingType__titulo">Tipo de envío</p>
+      <div class="selectradio_button">
+        <label class="radio-button">
+          <input type="radio" name="opcion" value="opcion1">
+          Premium 2 a 5 días (15%)
+        </label> <!-- .selectradio_button-->
+        <label class="radio-button">
+          <input type="radio" name="opcion" value="opcion2">
+          Express 5 a 8 días (7%)
+        </label> <!-- .selectradio_button-->
+        <label class="radio-button">
+          <input type="radio" name="opcion" value="opcion3">
+          Standard 12 a 15 días (5%)
+        </label> <!-- .selectradio_button-->
+      </div> 
+      <p class="shippingType__titulo">Dirección de envío</p>  
+      <form class="shippingAddress">
+        <div>
+          <label for="calle">Calle:</label>
+        <input class="data" type="text" name="calle" placeholder="Ingrese la calle" required>
+        </div>
+        <div>
+          <label for="numero">Número:</label>
+        <input class="data" type="number" name="numero" placeholder="Ingrese el número" required>
+        </div>
+        <div>
+          <label for="esquina">Esquina:</label>
+          <input class="data" type="text" name="esquina" placeholder="Referencia" required>
+        </div>
+      </form> <!--.shippingAddress-->
+
+    </div> 
   </main>
 
   <footer class="text-muted">
