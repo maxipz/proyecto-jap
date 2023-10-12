@@ -196,6 +196,9 @@ a.custom-card:hover {
   background-size: cover;
   font-family: sans-serif;
   height: 100vh;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
 }
 
 .login-box {
@@ -365,4 +368,60 @@ a.custom-card:hover {
 .data{
   padding: 5px;
   margin-left: 1px;
+}
+
+/* Responsive pagina products */
+@media (max-width: 576px) {
+    .menu-group {
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+    }
+    
+}
+@media (max-width: 576px) {
+  .text-precio{
+    margin: 0;
+  }
+}
+
+/* Responsive pagina product-info  */
+
+@media (max-width: 768px) {
+  .custom-image {
+    max-width: 400px;
+  }
+  #miOpinion{
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .imagen-carrusel{
+    margin: 0;
+    max-width: auto;
+  }
+  .card img{
+    width: 100%;
+    margin: 0 auto;
+  }
+  #comentarios{
+    padding: 0;
+  }
+}
+
+/* Responsive login */
+@media (max-width: 768px) {
+      .login-box {
+        width: 300px;
+        height: 500px;
+        background: #212529;
+        color: #fff;
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        box-sizing: border-box;
+        padding: 50px 30px;
+        box-shadow: 10px 10px 73px 0px rgba(0,0,0,0.75);
+        border-radius: 20px;
+      }
 }
