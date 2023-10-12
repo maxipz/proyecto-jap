@@ -34,3 +34,10 @@ function mostrarProductosEnHTML(articles) {
       productosTableBody.innerHTML += filaProducto;
     });
 }
+
+const limpiarCarrito = document.getElementById('cleanCart') //se limpia el carrito cuando se cliquea el boton y tambien limpia el localstorage
+limpiarCarrito.addEventListener('click', ()=> {
+  const productosTableBody = document.getElementById('product-table-body');
+  productosTableBody.innerHTML = '';
+  localStorage.removeItem('cart')
+})

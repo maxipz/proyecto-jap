@@ -373,3 +373,7 @@ a.custom-card:hover {
   border-radius: 5px;
   border-color: #4CAF50;
 }
+
+#cleanCart{
+  border-radius: 5px;
+}
