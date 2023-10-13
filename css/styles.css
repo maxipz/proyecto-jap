@@ -380,6 +380,7 @@ a.custom-card:hover {
 
 #cleanCart{
   border-radius: 5px;
+}
 
 /* Responsive pagina products */
 @media (max-width: 576px) {
