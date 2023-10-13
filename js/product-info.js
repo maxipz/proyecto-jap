@@ -214,9 +214,9 @@ document
 
 
 
-  const productId = localStorage.getItem(ID);
-  const productoPrincipal = obtenerInformacionDelProducto(productId);
-  const productosRelacionadosIds = productoPrincipal.relatedProducts; 
-  const productosRelacionados = productos.filter((producto) => {
-    return productosRelacionadosIds.includes(producto.id);
-  })
+  // const productId = localStorage.getItem(ID);
+  // const productoPrincipal = obtenerInformacionDelProducto(productId);
+  // const productosRelacionadosIds = productoPrincipal.relatedProducts; 
+  // const productosRelacionados = productos.filter((producto) => {
+  //   return productosRelacionadosIds.includes(producto.id);
+  // })
