@@ -4,7 +4,10 @@ const apiUrl = `https://japceibal.github.io/emercado-api/user_cart/${cartUserId}
 fetch(apiUrl)
   .then(response => response.json())
   .then(data => {
-    mostrarProductosEnHTML(data.articles);
+    const productoDelServidor = data.articles;
+    const productosDelLocalStorage = JSON.parse(localStorage.getItem('cart')) || [];
+    const cart = [...productoDelServidor, ...productosDelLocalStorage];
+    mostrarProductosEnHTML(cart);
   })
   .catch(error => {
     console.error('Hubo un error al realizar la solicitud:', error);
@@ -18,7 +21,7 @@ function mostrarProductosEnHTML(articles) {
   
     // Recorre el array de productos y genera filas de tabla para cada uno
     articles.forEach(producto => {
-      const filaProducto = `
+      let filaProducto = `
       <tr>
         <td><img src="${producto.image}" class="img-fluid" width="65px"></td>
         <td>${producto.name}</td>
@@ -47,3 +50,10 @@ function actualizarSubtotal(event) {
     const subtotalElement = input.parentElement.nextElementSibling;
     subtotalElement.textContent = `${subtotal} ${currency}`;
 }
+
+const limpiarCarrito = document.getElementById('cleanCart') //se limpia el carrito cuando se cliquea el boton y tambien limpia el localstorage
+limpiarCarrito.addEventListener('click', ()=> {
+  const productosTableBody = document.getElementById('product-table-body');
+  productosTableBody.innerHTML = '';
+  localStorage.removeItem('cart')
+})

@@ -370,6 +370,17 @@ a.custom-card:hover {
   margin-left: 1px;
 }
 
+/* Boton para agregar y limpiar el carrito */
+#addToCart {
+  background-color: #4CAF50; 
+  color: white; 
+  border-radius: 5px;
+  border-color: #4CAF50;
+}
+
+#cleanCart{
+  border-radius: 5px;
+
 /* Responsive pagina products */
 @media (max-width: 576px) {
     .menu-group {
