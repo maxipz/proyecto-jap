@@ -26,7 +26,7 @@ function showProducts(articles) {
         <td><img src="${product.image}" class="img-fluid" width="65px"></td>
         <td>${product.name}</td>
         <td>${product.unitCost} ${product.currency}</td>
-        <td><input type="number" class="count-input" value="${product.count}" min="1" data-unit-cost="${producto.unitCost}" data-currency="${producto.currency}"></td>
+        <td><input type="number" class="count-input" value="${product.count}" min="1" data-unit-cost="${product.unitCost}" data-currency="${product.currency}"></td>
         <td class="subtotal">${product.count * product.unitCost} ${product.currency}</td>
       </tr>
       `;
