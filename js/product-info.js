@@ -1,34 +1,34 @@
 window.onload = function () {
-  const productId = localStorage.getItem("IdProducto");
-  ObtenerInfo(productId);
-  ObtenerComentarios(productId);
+  const productId = localStorage.getItem("productId");
+  getInfo(productId);
+  getComments(productId);
 };
 
-function ObtenerInfo(ID) {
+function getInfo(ID) {
   const url = `https://japceibal.github.io/emercado-api/products/${ID}.json`;
   fetch(url)
     .then((response) => response.json())
-    .then((resultado) => {
-      const Titulo = document.getElementById("Titulo");
-      Titulo.innerHTML = resultado.name;
+    .then((result) => {
+      const title = document.getElementById("title");
+      title.innerHTML = result.name;
 
-      const Precio = document.getElementById("Precio");
-      Precio.innerHTML = `${resultado.currency} ${resultado.cost}`;
+      const cost = document.getElementById("cost");
+      cost.innerHTML = `${result.currency} ${result.cost}`;
 
-      const Descripcion = document.getElementById("Descripcion");
-      Descripcion.innerHTML = `${resultado.description}`;
+      const description = document.getElementById("description");
+      description.innerHTML = `${result.description}`;
 
-      const Categoria = document.getElementById("Categorias");
-      Categoria.innerHTML = `${resultado.category}`;
+      const category = document.getElementById("category");
+      category.innerHTML = `${result.category}`;
 
-      const CantidadVendidos = document.getElementById("CantVendidos");
-      CantidadVendidos.innerHTML = `${resultado.soldCount}`;
+      const soldCount = document.getElementById("soldCount");
+      soldCount.innerHTML = `${result.soldCount}`;
 
-      const imagenes = document.getElementById("imagenes");
-      imagenes.innerHTML = `<br>${mostrarImagenes(resultado)}<br>`;
+      const images = document.getElementById("images");
+      images.innerHTML = `<br>${showImages(result)}<br>`;
 
-      const productosRelacionados = document.getElementById("productosRelacionados");
-      productosRelacionados.innerHTML = `${mostrarProductoRelacionado(resultado)}`;
+      const relatedProducts = document.getElementById("relatedProducts");
+      relatedProducts.innerHTML = `${showRelatedProducts(result)}`;
 
 
       const addToCartButton = document.getElementById('addToCart');
@@ -37,23 +37,23 @@ function ObtenerInfo(ID) {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
         //Guarda la info del producto en el localStorage
-        const productoActual = {
-          id: resultado.id,
-          name: resultado.name,
-          unitCost: resultado.cost,
-          currency: resultado.currency,
-          image: resultado.images[0]
+        const currentProduct = {
+          id: result.id,
+          name: result.name,
+          unitCost: result.cost,
+          currency: result.currency,
+          image: result.images[0]
         };
 
-        const productoExistente = cart.find(item => item.id === productoActual.id);
+        const productExists = cart.find(item => item.id === currentProduct.id);
 
-        if (productoExistente) {
+        if (productExists) {
           // Si el producto existe, incrementa la cantidad
-          productoExistente.count += 1;
+          productExists.count += 1;
         } else {
           // Si el producto no existe, agrégalo al carrito
-          productoActual.count = 1;
-          cart.push(productoActual);
+          currentProduct.count = 1;
+          cart.push(currentProduct);
         }
         localStorage.setItem('cart', JSON.stringify(cart));
 
@@ -68,14 +68,14 @@ function ObtenerInfo(ID) {
 }
 
 function setProductID(id) {
-  localStorage.setItem("productID", id);
+  localStorage.setItem("productId", id);
   window.location = "product-info.html"
 }
 
-function mostrarProductos(productos) {
-  let htmlContenedor = ''
-  productos.forEach(element => {
-    htmlContenedor += `
+function showProducts(products) {
+  let htmlContainer = ''
+  products.forEach(element => {
+    htmlContainer += `
       <div onclick='setProductID(${element.id})' class="list-group-item list-group-item-action cursor-active">
           <div class="row">
               <div class="col-3">
@@ -92,19 +92,19 @@ function mostrarProductos(productos) {
       </div>
       `
   })
-  return htmlContenedor
+  return htmlContainer
 }
 
 
-function mostrarImagenes(producto) {
-  let contenedorImagenes = `
+function showImages(product) {
+  let imagesContainer = `
     <div id="carouselControls" class="carousel slide w-75 mx-auto" data-bs-ride="carousel">
       <div class="carousel-inner">
   `;
 
-  producto.images.forEach((element, index) => {
+  product.images.forEach((element, index) => {
     const activeClass = index === 0 ? "active" : ""; // Agrega la clase 'active' al primer elemento
-    contenedorImagenes += `
+    imagesContainer += `
       <div class="carousel-item ${activeClass} text-center">
         <img src="${element}" class="d-block mx-auto custom-image" alt="Imagen ${index + 1}">
         <div class="carousel-caption">
@@ -114,7 +114,7 @@ function mostrarImagenes(producto) {
     `;
   });
 
-  contenedorImagenes += `
+  imagesContainer += `
       </div>
 
       <!-- Botones de control para avanzar y retroceder -->
@@ -130,16 +130,16 @@ function mostrarImagenes(producto) {
     </div>
   `;
 
-  return contenedorImagenes;
+  return imagesContainer;
 }
 
-function mostrarProductoRelacionado(producto) {
-  let contenedorProductoRelacionado = '';
-  contenedorProductoRelacionado += '<div class="row">';
-  producto.relatedProducts.forEach(element => {
-    contenedorProductoRelacionado += `
+function showRelatedProducts(product) {
+  let relatedProductsContainer = '';
+  relatedProductsContainer += '<div class="row">';
+  product.relatedProducts.forEach(element => {
+    relatedProductsContainer += `
     
-      <div onclick='redireccionarProducto(${element.id})'class="col-md-3 mb-4 cursor-active">
+      <div onclick='redirectProduct(${element.id})'class="col-md-3 mb-4 cursor-active">
       
         <div class="card">
           <img class="card-img-top" src="${element.image}" alt="Imagen">
@@ -150,12 +150,12 @@ function mostrarProductoRelacionado(producto) {
       </div>
     `;
   });
-  contenedorProductoRelacionado += '</div>';
-  return contenedorProductoRelacionado;
+  relatedProductsContainer += '</div>';
+  return relatedProductsContainer;
 }
 
-function redireccionarProducto(id) { //Se declara funcion para guardar en localstorage el ID del producto
-  localStorage.setItem("IdProducto", id);
+function redirectProduct(id) { //Se declara funcion para guardar en localstorage el ID del producto
+  localStorage.setItem("productId", id);
   window.location = `product-info.html`;//Se redirige a la pagina product-info
 }
 
@@ -185,59 +185,59 @@ const seconds = String(currentDate.getSeconds()).padStart(2, "0");
 
 const formattedDate = ` ${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
-function ObtenerComentarios(ID) {
+function getComments(ID) {
   const url = `https://japceibal.github.io/emercado-api/products_comments/${ID}.json`;
 
   fetch(url)
     .then((response) => response.json())
-    .then((comentarios) => {
-      const mostrarComentarios = document.getElementById("comentarios");
-      comentarios.forEach((comentario) => {
+    .then((comments) => {
+      const showComments = document.getElementById("comments");
+      comments.forEach((comment) => {
         const li = document.createElement("li");
         li.innerHTML = `
             <div class="row-fluid border p-2">
-            <strong>${comentario.user}</strong> - ${comentario.dateTime
-          } - ${starRating(comentario.score)} <br>
-            ${comentario.description}</div>
+            <strong>${comment.user}</strong> - ${comment.dateTime
+          } - ${starRating(comment.score)} <br>
+            ${comment.description}</div>
 
           `;
-        mostrarComentarios.appendChild(li);
+        showComments.appendChild(li);
       });
     })
     .catch((error) => console.error("Ocurrió un error:", error));
 }
 
-function mostrarComentarioNuevo(nuevoComentario) {
+function showNewComment(newComment) {
   //Funcion para agregar el comentario nuevo a la pagina
-  const contenedorComentarios = document.getElementById("comentarios");
-  let containerComentarioNuevo = `
+  const commentsContainer = document.getElementById("comments");
+  let newCommentsContainer = `
   <div class="row-fluid border p-2">
   <div class="col-sm">
-  <li><b>${nuevoComentario.usuario}</b>${nuevoComentario.fecha} ${starRating(
-    nuevoComentario.rating
+  <li><b>${newComment.user}</b>${newComment.date} ${starRating(
+    newComment.rating
   )}<br>
-  ${nuevoComentario.descripcion}</li>
+  ${newComment.description}</li>
   </div>
   </div>
   `;
-  contenedorComentarios.innerHTML += containerComentarioNuevo;
+  commentsContainer.innerHTML += newCommentsContainer;
 }
 
 document
-  .getElementById("envioComentario")
+  .getElementById("sendComment")
   .addEventListener("submit", (event) => {
     //Agregamos un event listener al formulario
     event.preventDefault(); //evita que se recarge             //de comentario nuevo para agregar el comentario cuando se haga el submit
-    const comentarioNuevo = document.getElementById("miOpinion").value;
-    const rating = document.getElementById("miPuntuacion").value;
-    const nuevoComentario = {
+    const textComment = document.getElementById("myOpinion").value;
+    const rating = document.getElementById("myRating").value;
+    const newComment = {
       //Creamos un nuevo objeto que contenga el comentario
-      usuario: localStorage.getItem("username"), // Reemplazar con usuario de localstorage
-      fecha: formattedDate, // Para usar fecha actual
-      descripcion: comentarioNuevo,
+      user: localStorage.getItem("username"), // Reemplazar con usuario de localstorage
+      date: formattedDate, // Para usar fecha actual
+      description: textComment,
       rating: rating,
     };
-    mostrarComentarioNuevo(nuevoComentario);
-    document.getElementById("envioComentario").reset();
+    showNewComment(newComment);
+    document.getElementById("sendComment").reset();
   });
 
