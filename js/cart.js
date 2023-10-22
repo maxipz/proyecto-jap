@@ -14,14 +14,14 @@ fetch(apiUrl)
   });
 
 function showProducts(articles) {
-  const tableBodyProducts = document.getElementById('product-table-body');
-
-  // Limpia cualquier contenido previo en la tabla
-  tableBodyProducts.innerHTML = '';
-
-  // Recorre el array de productos y genera filas de tabla para cada uno
-  articles.forEach(product => {
-    let rowProduct = `
+    const tableBodyProducts = document.getElementById('product-table-body');
+  
+    // Limpia cualquier contenido previo en la tabla
+    tableBodyProducts.innerHTML = '';
+  
+    // Recorre el array de productos y genera filas de tabla para cada uno
+    articles.forEach(product => {
+      let rowProduct = `
       <tr>
         <td><img src="${product.image}" class="img-fluid" width="65px"></td>
         <td>${product.name}</td>
@@ -30,29 +30,29 @@ function showProducts(articles) {
         <td class="subtotal">${product.count * product.unitCost} ${product.currency}</td>
       </tr>
       `;
+  
+      tableBodyProducts.innerHTML += rowProduct;
+    });
 
-    tableBodyProducts.innerHTML += rowProduct;
-  });
-
-  // Agregar event listener a los campos de entrada de cantidad
-  const countInputs = document.querySelectorAll('.count-input');
-  countInputs.forEach(input => {
-    input.addEventListener('input', updateSubtotal);
-  });
+    // Agregar event listener a los campos de entrada de cantidad
+    const countInputs = document.querySelectorAll('.count-input');
+    countInputs.forEach(input => {
+      input.addEventListener('input', updateSubtotal);
+    });
 }
 
 function updateSubtotal(event) {
-  const input = event.target;
-  const count = parseInt(input.value);
-  const unitCost = parseFloat(input.getAttribute('data-unit-cost'));
-  const currency = input.getAttribute('data-currency');
-  const subtotal = count * unitCost;
-  const subtotalElement = input.parentElement.nextElementSibling;
-  subtotalElement.textContent = `${subtotal} ${currency}`;
+    const input = event.target;
+    const count = parseInt(input.value);
+    const unitCost = parseFloat(input.getAttribute('data-unit-cost'));
+    const currency = input.getAttribute('data-currency');
+    const subtotal = count * unitCost;
+    const subtotalElement = input.parentElement.nextElementSibling;
+    subtotalElement.textContent = `${subtotal} ${currency}`;
 }
 
 const cleanCart = document.getElementById('cleanCart') //se limpia el carrito cuando se cliquea el boton y tambien limpia el localstorage
-cleanCart.addEventListener('click', () => {
+cleanCart.addEventListener('click', ()=> {
   const tableBodyProducts = document.getElementById('product-table-body');
   tableBodyProducts.innerHTML = '';
   localStorage.removeItem('cart')
@@ -83,6 +83,26 @@ document.addEventListener("DOMContentLoaded", function () {
     payMethod.textContent = 'Transferencia bancaria | ';
   })
 });
+
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
 
 
 

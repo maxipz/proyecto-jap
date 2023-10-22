@@ -53,7 +53,7 @@
     <br>
     <h1 class="text-center pt-3">Carrito de compras</h1>
     <br>
-    <h5>Articulos a comprar</h5>
+    <p class="payTitle">Articulos a comprar</p>
     <br>
     <table class="table">
       <thead>
@@ -68,46 +68,79 @@
       <tbody id="product-table-body">
       </tbody>
     </table>
-    <div class="mb-3">
+    <div class="mt-4">
       <button id="cleanCart">Limpiar Carrito</button>
     </div>
-    <div class="shippingType">
-      <p class="shippingType__titulo">Tipo de envío</p>
-      <div class="selectradio_button">
-        <label class="radio-button">
-          <input type="radio" name="opcion" value="opcion1">
-          Premium 2 a 5 días (15%)
-        </label> <!-- .selectradio_button-->
-        <label class="radio-button">
-          <input type="radio" name="opcion" value="opcion2">
-          Express 5 a 8 días (7%)
-        </label> <!-- .selectradio_button-->
-        <label class="radio-button">
-          <input type="radio" name="opcion" value="opcion3">
-          Standard 12 a 15 días (5%)
-        </label> <!-- .selectradio_button-->
-      </div>
-      <p class="shippingType__titulo">Dirección de envío</p>
-      <form class="shippingAddress">
-        <div>
-          <label for="calle">Calle:</label>
-          <input class="data" type="text" name="calle" placeholder="Ingrese la calle" required>
-        </div>
-        <div>
-          <label for="numero">Número:</label>
-          <input class="data" type="number" name="numero" placeholder="Ingrese el número" required>
-        </div>
-        <div>
-          <label for="esquina">Esquina:</label>
-          <input class="data" type="text" name="esquina" placeholder="Referencia" required>
-        </div>
-      </form> <!--.shippingAddress-->
 
+    <div class="container mt-5">
+      <form class="row needs-validation" novalidate>
+        <div class="col-12">
+          <p class="payTitle">Tipo de envío</p>
+          <div class="form-check">
+            <label for="shippingType1" class="form-check-label">Premium 2 a 5 días (15%)</label>
+            <input class="form-check-input" type="radio" name="defaultShipping" id="shippingType1" required>            
+          </div>
+          <div class="form-check">
+            <label for="shippingType2" class="form-check-label">Premium 2 a 5 días (15%)</label>
+            <input class="form-check-input" type="radio" name="defaultShipping" id="shippingType2" required>
+          </div>
+          <div class="form-check">
+            <label for="shippingType3" class="form-check-label">Premium 2 a 5 días (15%)</label>
+            <input class="form-check-input" type="radio" name="defaultShipping" id="shippingType3" required>
+            <div class="valid-feedback">
+              Es correcto!
+            </div>
+            <div class="invalid-feedback">
+              Debes seleccionar un tipo de envío.
+            </div>
+          </div>
+          <hr class="mt-5">
+        </div>
+        
+        <p class="payTitle mt-4">Dirección de envío</p>
+        <div class="d-flex flex-column">
+        <div class="col-3">     
+          <label for="streetName" class="form-label">Calle</label>
+          <input type="text" class="form-control" id="streetName" required>
+          <div class="valid-feedback">
+            Es correcto!
+          </div>
+          <div class="invalid-feedback">
+            Debes ingresar una calle.
+          </div>
+        </div>
+        <div class="col-3">
+          <label for="streetNumber" class="form-label">Número</label>
+          <input type="text" class="form-control" id="streetNumber" required>
+          <div class="valid-feedback">
+            Es correcto!
+          </div>
+          <div class="invalid-feedback">
+            Debes ingresar un número de calle.
+          </div>
+        </div>
+        <div class="col-3">
+          <label for="streetCorner" class="form-label">Esquina</label>
+          <input type="text" class="form-control" id="streetCorner" required>
+          <div class="valid-feedback">
+            Es correcto!
+          </div>
+          <div class="invalid-feedback">
+            Debes ingresar una esquina.
+          </div>
+        </div>
+      </div>
+              <button type="submit" class="btn btn-primary mt-3">Finalizar compra</button>
+      </form>
     </div>
+    
+    
+
+    
 
     <!--Forma de pago-->
     <div>
-      <hr>
+      <hr class="mt-5">
       <p class="payTitle">Forma de pago</p>
       <p class="d-inline-block" id="method">No se ha seleccionado | </p>
       <a class="link-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar</a>
@@ -170,6 +203,9 @@
         </div>
       </div>
     </div>
+
+    
+    
 
 
   </main>
