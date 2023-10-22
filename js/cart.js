@@ -104,6 +104,27 @@ document.addEventListener("DOMContentLoaded", function () {
   })
 })()
 
+// Funcion para validar la forma de pago
+
+function validateMessage() {
+  let paymentValidation = document.getElementById("method");
+  let validationP = document.getElementById("validationP");
+
+  if (paymentValidation.textContent === "No se ha seleccionado | ") {
+    // Si el mensaje es "No se ha seleccionado | ", muestra el párrafo oculto del HTML
+    validationP.style.display = "block";
+  } else {
+    // Si el mensaje es diferente a "No se ha seleccionado | ", oculta el párrafo del html
+    validationP.style.display = "none"; // Para ocultar
+  }
+}
+
+// Obtén el botón "Finalizar compra" por su ID
+var finishPurch = document.getElementById("finishPurch");
+
+// Agrega un evento click al botón "Finalizar compra" para verificar el mensaje
+finishPurch.addEventListener("click", validateMessage);
+
 
 
 

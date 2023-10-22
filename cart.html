@@ -129,83 +129,75 @@
             Debes ingresar una esquina.
           </div>
         </div>
-      </div>
-              <button type="submit" class="btn btn-primary mt-3">Finalizar compra</button>
-      </form>
-    </div>
+        <div>
+          <hr class="mt-5">
+          <p class="payTitle">Forma de pago</p>
+          <p class="d-inline-block" id="method">No se ha seleccionado | </p>
+          <a class="link-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar</a>
+          <p id="validationP" style="display: none; color: red;">Debes seleccionar una forma de pago</p> <!-- Párrafo "Hola" oculto inicialmente -->
+        </div>
     
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Forma de pago</h1>
     
-
-    
-
-    <!--Forma de pago-->
-    <div>
-      <hr class="mt-5">
-      <p class="payTitle">Forma de pago</p>
-      <p class="d-inline-block" id="method">No se ha seleccionado | </p>
-      <a class="link-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar</a>
-
-    </div>
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Forma de pago</h1>
-
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <input type="radio" id="option1" name="option">
-              <label for="option1">Tarjeta de crédito</label>
-              <hr>
-
-              <div class="container" id="option-card">
-                <div class="row row-cols-2">
-
-                  <div class="col">
-                    <label for="card-number">Número de Tarjeta</label>
-                    <input type="text" class="form-control" id="card-number" name="card-number" required>
-                  </div>
-
-                  <div class="col">
-                    <label for="cvv">Código de seg.</label>
-                    <input type="text" class="form-control w-75" id="cvv" name="cvv" required><br>
-                  </div>
-
-                  <div class="col">
-                    <label for="expiration-date">Vencimiento (MM/AA)</label>
-                    <input type="text" class="form-control" id="expiration-date" name="expiration-date" required><br>
-                  </div>
-
-                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-
-              <input type="radio" id="option2" name="option">
-              <label for="option2">Transferencia bancaria</label>
-              <hr>
-
-              <div class="container" id="option-bank">
-                <div class="row row-cols-2">
-
-                  <div class="col">
-                    <label for="account-number">Número de cuenta</label>
-                    <input type="text" class="form-control" id="account-number" name="account-number" required>
+              <div class="modal-body">
+                
+                  <input type="radio" id="option1" name="option">
+                  <label for="option1">Tarjeta de crédito</label>
+                  <hr>
+    
+                  <div class="container" id="option-card">
+                    <div class="row row-cols-2">
+    
+                      <div class="col">
+                        <label for="card-number">Número de Tarjeta</label>
+                        <input type="text" class="form-control" id="card-number" name="card-number" required>
+                      </div>
+    
+                      <div class="col">
+                        <label for="cvv">Código de seg.</label>
+                        <input type="text" class="form-control w-75" id="cvv" name="cvv" required><br>
+                      </div>
+    
+                      <div class="col">
+                        <label for="expiration-date">Vencimiento (MM/AA)</label>
+                        <input type="text" class="form-control" id="expiration-date" name="expiration-date" required><br>
+                      </div>
+    
+                    </div>
                   </div>
-                </div>
+    
+                  <input type="radio" id="option2" name="option">
+                  <label for="option2">Transferencia bancaria</label>
+                  <hr>
+    
+                  <div class="container" id="option-bank">
+                    <div class="row row-cols-2">
+    
+                      <div class="col">
+                        <label for="account-number">Número de cuenta</label>
+                        <input type="text" class="form-control" id="account-number" name="account-number" required>
+                      </div>
+                    </div>
+                  </div>
+                
               </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    
-    
+      </div>
+              <button type="submit" class="btn btn-primary mt-3" id="finishPurch">Finalizar compra</button>
+      </form>
+    </div>
 
 
   </main>
