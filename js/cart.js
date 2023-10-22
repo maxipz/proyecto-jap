@@ -120,7 +120,7 @@ function validateMessage() {
 }
 
 // Obtén el botón "Finalizar compra" por su ID
-var finishPurch = document.getElementById("finishPurch");
+let finishPurch = document.getElementById("finishPurch");
 
 // Agrega un evento click al botón "Finalizar compra" para verificar el mensaje
 finishPurch.addEventListener("click", validateMessage);
