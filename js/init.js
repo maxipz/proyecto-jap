@@ -98,3 +98,4 @@ function cambiarModoColor() {
     colorModeButton.innerText = "Cambiar a Dark";
   }
 }
+

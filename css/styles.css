@@ -335,40 +335,7 @@ a.custom-card:hover {
   padding: 20px; /* Espacio alrededor de las flechas */
 }
 
-/* Tipo y direccion de envio */
 
-.shippingType p {
-  margin: 0;
-}
-.selectradio_button{
-  display: flex;
-  flex-direction: column;
-  margin: 1rem;
-}
-.radio-button{
-  margin-bottom: .4rem;
-}
-.shippingType__titulo{
-  font-size: 1.4rem;
-}
-.shippingAddress{
-  display: flex;
-  flex-direction: column;
-  margin: 1rem;
-}
-.shippingAddress label{
-  width: 100px;
-  text-align: right;
-  padding-right: 50px;
-}
-.shippingAddress div{
-  display: flex;
-  margin-bottom: .8rem;
-}
-.data{
-  padding: 5px;
-  margin-left: 1px;
-}
 
 /* Boton para agregar y limpiar el carrito */
 #addToCart {
