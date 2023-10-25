@@ -143,7 +143,7 @@
     <div>
 
       <div class="row mt-5">
-        <p class="payTitle">Costos</p>
+        <p class="payTitle mb-4">Costos</p>
         <div class="list-group-item list-group-item-action cursor-active">
           <div class="row">
             <div class="col-3">
@@ -179,7 +179,7 @@
     
       <div>
         <hr class="mt-5">
-        <p class="payTitle mt-3">Forma de pago</p>
+        <p class="payTitle mt-5">Forma de pago</p>
         <p class="d-inline-block" id="method">No se ha seleccionado | </p>
         <a class="link-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar</a>
   
@@ -195,7 +195,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             
-              <form id="pmForm" class="modal-body needs-validation" novalidate>
+              <form id="modalForm" class="modal-body needs-validation" novalidate>
                 <input type="radio" id="option1" name="option">
                 <label for="option1">Tarjeta de crédito</label>
                 <hr>
@@ -249,6 +249,12 @@
                     <div class="col">
                       <label for="account-number">Número de cuenta</label>
                       <input type="text" class="form-control" id="account-number" name="account-number" required>
+                      <div class="valid-feedback">
+                        Es correcto!
+                      </div>
+                      <div class="invalid-feedback">
+                        Debes ingresar un número de cuenta.
+                      </div>
                     </div>
                   </div>
                 </div>

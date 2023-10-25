@@ -200,7 +200,7 @@ document.getElementById("checkoutBtn").addEventListener("click", (e) => {
       if (!form.checkValidity()) {
           valid = false;
 // Formulario de metodo de pago
-          if (form.id === "pmForm") {
+          if (form.id === "modalForm") {
             payMethod.innerText = "Debe rellenar los campos | ";
             payMethod.style.color = "#ff0602";
             
