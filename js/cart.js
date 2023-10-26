@@ -10,6 +10,7 @@ let subtotalCart = 0;
 let shippingCost = 0;
 let totalCostCart = 0;
 
+
 const cartUserId = 25801;
 const apiUrl = `https://japceibal.github.io/emercado-api/user_cart/${cartUserId}.json`;
 
@@ -29,14 +30,13 @@ fetch(apiUrl)
 
 function showProducts(articles) {
   const tableBodyProducts = document.getElementById('product-table-body');
-  subtotalCart = 0; // Inicializa el subtotalCart a 0 antes de recorrer los productos
 
   tableBodyProducts.innerHTML = '';
 
   articles.forEach((product, index) => {
     let exchangeRate = product.currency === 'UYU' ? exchangeRateUYUtoUSD : exchangeRateUSDtoUSD;
     const subtotal = product.count * product.unitCost * exchangeRate;
-    subtotalCart += subtotal; // Actualiza el subtotalCart en cada iteración
+    subtotalCart += subtotal;
 
     let rowProduct = `
       <tr>
@@ -60,85 +60,65 @@ function showProducts(articles) {
 
   const countInputs = document.querySelectorAll('.count-input');
   countInputs.forEach((input) => {
-    input.addEventListener('input', function (event) {
-      updateSubtotal(event);
-    });
+    const index = input.getAttribute('data-index');
+    const product = articles[index]; // Get the product using the index
 
-    // Actualiza el costo total y el costo de envío después de eliminar un producto
-    updateTotal();
+    input.addEventListener('input', function (event) {
+      updateCosts(event, product); // Pass the product object along with the event
+    });
   });
 
-  // Actualiza el subtotal en la tabla de costos
   subtotalCartHTML.textContent = `${parseFloat(subtotalCart).toFixed(2)} USD`;
-
-  updateShipping(shippingCost);
+  updateCosts()
 }
 
 function removeProduct(index) {
   const productIndex = parseInt(index);
   cart.splice(productIndex, 1);
   localStorage.setItem('cart', JSON.stringify(cart));
-  showProducts(cart); // Mostrar productos restantes
-
-  if (cart.length === 0) {
-    // Si el carrito está vacío, oculta la tabla y establece los valores en 0
-    const tableBodyProducts = document.getElementById('product-table-body');
-    tableBodyProducts.innerHTML = '';
-    subtotalCart = 0;
-    shippingCost = 0;
-    totalCostCart = 0;
-    subtotalCartHTML.textContent = '0.00 USD';
-    shippingCostCartHTML.textContent = '0.00 USD';
-    totalCostCartHTML.textContent = '0.00 USD';
-  }
+  showProducts(cart);
+  updateCosts()
 }
 
 
 shipping1.addEventListener('change', function () {
   if (shipping1.checked) {
     shippingCost = parseFloat(subtotalCart) * 0.15;
-    updateShipping(shippingCost);
-    updateTotal();
+    updateCosts()
   }
 });
 
 shipping2.addEventListener('change', function () {
   if (shipping2.checked) {
     shippingCost = parseFloat(subtotalCart) * 0.07;
-    updateShipping(shippingCost);
-    updateTotal();
-  }
+    updateCosts()
+    }
 });
 
 shipping3.addEventListener('change', function () {
   if (shipping3.checked) {
     shippingCost = parseFloat(subtotalCart) * 0.05;
-    updateShipping(shippingCost);
-    updateTotal();
+    updateCosts()
   }
 });
 
-function updateShipping(shippingCost) {
-  shippingCostCartHTML.textContent = `${shippingCost.toFixed(2)} USD`;
-}
 
-function updateTotal() {
-  totalCostCart = subtotalCart + shippingCost;
-  totalCostCartHTML.textContent = `${totalCostCart.toFixed(2)} USD`;
-}
+function updateSubtotal(event, product) {
+  if (event) {
+    const input = event.target;
+    const count = parseInt(input.value);
+    const unitCost = parseFloat(input.getAttribute('data-unit-cost'));
+    const currency = input.getAttribute('data-currency');
+    const subtotalElement = input.parentElement.nextElementSibling;
 
-function updateSubtotal(event) {
-  const input = event.target;
-  const count = parseInt(input.value);
-  const unitCost = parseFloat(input.getAttribute('data-unit-cost'));
-  const currency = input.getAttribute('data-currency');
-  const subtotalElement = input.parentElement.nextElementSibling;
+    let exchangeRate = currency === 'UYU' ? exchangeRateUYUtoUSD : exchangeRateUSDtoUSD;
+    const subtotal = count * unitCost * exchangeRate;
+    subtotalElement.textContent = `${subtotal.toFixed(2)} USD`;
 
-  let exchangeRate = currency === 'UYU' ? exchangeRateUYUtoUSD : exchangeRateUSDtoUSD;
-  const subtotal = count * unitCost * exchangeRate;
-  subtotalElement.textContent = `${subtotal.toFixed(2)} USD`;
+    // Update the product count
+    product.count = count;
+  }
 
-  // Actualiza el subtotal en la tabla de costos
   const subtotalElements = document.querySelectorAll('.subtotal');
   subtotalCart = 0;
   subtotalElements.forEach((element) => {
@@ -147,7 +127,9 @@ function updateSubtotal(event) {
   });
 
   subtotalCartHTML.textContent = `${parseFloat(subtotalCart).toFixed(2)} USD`;
+}
 
+function updateShipping(shippingCost) {
   if (shipping1.checked) {
     shippingCost = parseFloat(subtotalCart) * 0.15;
   } else if (shipping2.checked) {
@@ -155,7 +137,16 @@ function updateSubtotal(event) {
   } else if (shipping3.checked) {
     shippingCost = parseFloat(subtotalCart) * 0.05;
   }
+  shippingCostCartHTML.textContent = `${shippingCost.toFixed(2)} USD`;
+}
 
+function updateTotal() {
+  totalCostCart = subtotalCart + shippingCost;
+  totalCostCartHTML.textContent = `${totalCostCart.toFixed(2)} USD`;
+}
+
+function updateCosts(event, product) {
+  updateSubtotal(event, product);
   updateShipping(shippingCost);
   updateTotal();
 }
@@ -164,7 +155,6 @@ const cleanCart = document.getElementById('cleanCart');
 cleanCart.addEventListener('click', () => {
   const tableBodyProducts = document.getElementById('product-table-body');
   tableBodyProducts.innerHTML = '';
-  subtotalCart = 0; // Restablece el subtotal a 0 cuando se limpia el carrito
   subtotalCartHTML.textContent = '';
   shippingCostCartHTML.textContent = '';
   totalCostCartHTML.textContent = '';
