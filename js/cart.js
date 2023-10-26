@@ -21,12 +21,36 @@ fetch(apiUrl)
   .then((data) => {
     const preselectedProduct = data.articles;
     const localStorageProducts = JSON.parse(localStorage.getItem('cart')) || [];
-    cart = [...preselectedProduct, ...localStorageProducts];
+    cart = consolidateCart(preselectedProduct, localStorageProducts);
     showProducts(cart);
   })
   .catch((error) => {
     console.error('Hubo un error al realizar la solicitud:', error);
   });
+
+  function consolidateCart(cart1, cart2) {
+    const consolidatedCart = [];
+  
+    for (const product of cart1) {
+      const existingProduct = consolidatedCart.find(p => p.name === product.name);
+      if (existingProduct) {
+        existingProduct.count += product.count;
+      } else {
+        consolidatedCart.push({ ...product });
+      }
+    }
+  
+    for (const product of cart2) {
+      const existingProduct = consolidatedCart.find(p => p.name === product.name);
+      if (existingProduct) {
+        existingProduct.count += product.count;
+      } else {
+        consolidatedCart.push({ ...product });
+      }
+    }
+  
+    return consolidatedCart;
+  }
 
 function showProducts(articles) {
   const tableBodyProducts = document.getElementById('product-table-body');
@@ -74,10 +98,19 @@ function showProducts(articles) {
 
 function removeProduct(index) {
   const productIndex = parseInt(index);
-  cart.splice(productIndex, 1);
+  const removedProduct = cart.splice(productIndex, 1)[0];
   localStorage.setItem('cart', JSON.stringify(cart));
   showProducts(cart);
-  updateCosts()
+  
+  // Deseleccionar todos los botones de envío
+  shipping1.checked = false;
+  shipping2.checked = false;
+  shipping3.checked = false;
+
+  // Establecer el costo de envío en 0
+  shippingCost = 0;
+
+  updateCosts();
 }
 
 
