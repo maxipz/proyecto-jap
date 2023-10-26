@@ -29,13 +29,14 @@ fetch(apiUrl)
 
 function showProducts(articles) {
   const tableBodyProducts = document.getElementById('product-table-body');
+  subtotalCart = 0; // Inicializa el subtotalCart a 0 antes de recorrer los productos
 
   tableBodyProducts.innerHTML = '';
 
   articles.forEach((product, index) => {
     let exchangeRate = product.currency === 'UYU' ? exchangeRateUYUtoUSD : exchangeRateUSDtoUSD;
     const subtotal = product.count * product.unitCost * exchangeRate;
-    subtotalCart += subtotal;
+    subtotalCart += subtotal; // Actualiza el subtotalCart en cada iteración
 
     let rowProduct = `
       <tr>
@@ -62,20 +63,34 @@ function showProducts(articles) {
     input.addEventListener('input', function (event) {
       updateSubtotal(event);
     });
+
+    // Actualiza el costo total y el costo de envío después de eliminar un producto
+    updateTotal();
   });
 
-  
-
+  // Actualiza el subtotal en la tabla de costos
   subtotalCartHTML.textContent = `${parseFloat(subtotalCart).toFixed(2)} USD`;
+
   updateShipping(shippingCost);
-  updateTotal();
 }
 
 function removeProduct(index) {
   const productIndex = parseInt(index);
   cart.splice(productIndex, 1);
   localStorage.setItem('cart', JSON.stringify(cart));
-  showProducts(cart);
+  showProducts(cart); // Mostrar productos restantes
+
+  if (cart.length === 0) {
+    // Si el carrito está vacío, oculta la tabla y establece los valores en 0
+    const tableBodyProducts = document.getElementById('product-table-body');
+    tableBodyProducts.innerHTML = '';
+    subtotalCart = 0;
+    shippingCost = 0;
+    totalCostCart = 0;
+    subtotalCartHTML.textContent = '0.00 USD';
+    shippingCostCartHTML.textContent = '0.00 USD';
+    totalCostCartHTML.textContent = '0.00 USD';
+  }
 }
 
 
@@ -123,6 +138,7 @@ function updateSubtotal(event) {
   const subtotal = count * unitCost * exchangeRate;
   subtotalElement.textContent = `${subtotal.toFixed(2)} USD`;
 
+  // Actualiza el subtotal en la tabla de costos
   const subtotalElements = document.querySelectorAll('.subtotal');
   subtotalCart = 0;
   subtotalElements.forEach((element) => {
@@ -148,6 +164,7 @@ const cleanCart = document.getElementById('cleanCart');
 cleanCart.addEventListener('click', () => {
   const tableBodyProducts = document.getElementById('product-table-body');
   tableBodyProducts.innerHTML = '';
+  subtotalCart = 0; // Restablece el subtotal a 0 cuando se limpia el carrito
   subtotalCartHTML.textContent = '';
   shippingCostCartHTML.textContent = '';
   totalCostCartHTML.textContent = '';
