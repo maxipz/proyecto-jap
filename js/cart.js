@@ -28,29 +28,29 @@ fetch(apiUrl)
     console.error('Hubo un error al realizar la solicitud:', error);
   });
 
-  function consolidateCart(cart1, cart2) {
-    const consolidatedCart = [];
-  
-    for (const product of cart1) {
-      const existingProduct = consolidatedCart.find(p => p.name === product.name);
-      if (existingProduct) {
-        existingProduct.count += product.count;
-      } else {
-        consolidatedCart.push({ ...product });
-      }
+function consolidateCart(cart1, cart2) {
+  const consolidatedCart = [];
+
+  for (const product of cart1) {
+    const existingProduct = consolidatedCart.find(p => p.name === product.name);
+    if (existingProduct) {
+      existingProduct.count += product.count;
+    } else {
+      consolidatedCart.push({ ...product });
     }
-  
-    for (const product of cart2) {
-      const existingProduct = consolidatedCart.find(p => p.name === product.name);
-      if (existingProduct) {
-        existingProduct.count += product.count;
-      } else {
-        consolidatedCart.push({ ...product });
-      }
-    }
-  
-    return consolidatedCart;
   }
+
+  for (const product of cart2) {
+    const existingProduct = consolidatedCart.find(p => p.name === product.name);
+    if (existingProduct) {
+      existingProduct.count += product.count;
+    } else {
+      consolidatedCart.push({ ...product });
+    }
+  }
+
+  return consolidatedCart;
+}
 
 function showProducts(articles) {
   const tableBodyProducts = document.getElementById('product-table-body');
@@ -101,7 +101,7 @@ function removeProduct(index) {
   const removedProduct = cart.splice(productIndex, 1)[0];
   localStorage.setItem('cart', JSON.stringify(cart));
   showProducts(cart);
-  
+
   // Deseleccionar todos los botones de envío
   shipping1.checked = false;
   shipping2.checked = false;
@@ -125,7 +125,7 @@ shipping2.addEventListener('change', function () {
   if (shipping2.checked) {
     shippingCost = parseFloat(subtotalCart) * 0.07;
     updateCosts()
-    }
+  }
 });
 
 shipping3.addEventListener('change', function () {
@@ -204,21 +204,16 @@ function PaymentMethod() {
   const alert = document.getElementById('successAlert');
   const forms = document.getElementsByClassName('needs-validation');
 
-  option1Radio.addEventListener('change', function () {
+  function radioChange() {
     option2Text.disabled = option1Radio.checked;
     for (const input of option1Texts) {
       input.disabled = option2Radio.checked;
     }
-    payMethod.textContent = 'Tarjeta de crédito | ';
-  });
+    payMethod.textContent = option1Radio.checked ? 'Tarjeta de crédito | ' : 'Transferencia bancaria | ';
+  }
 
-  option2Radio.addEventListener('change', function () {
-    for (const input of option1Texts) {
-      input.disabled = option2Radio.checked;
-    }
-    option2Text.disabled = option1Radio.checked;
-    payMethod.textContent = 'Transferencia bancaria | ';
-  });
+  option1Radio.addEventListener("change", radioChange);
+  option2Radio.addEventListener("change", radioChange);
 
   document.getElementById('checkoutBtn').addEventListener('click', (e) => {
     let valid = true;
