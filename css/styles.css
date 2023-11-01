@@ -430,3 +430,10 @@ a.custom-card:hover {
   border-radius: 0.25rem;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+
+
+/* Estilo para hacer que la imagen sea más pequeña */
+.img-sm {
+  max-width: 150px; /* Ancho máximo de la imagen */
+  max-height: 150px; /* Alto máximo de la imagen */
+}
