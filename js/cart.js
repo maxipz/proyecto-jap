@@ -1,16 +1,3 @@
-const subtotalCartHTML = document.getElementById('costsSubtotal');
-const shippingCostCartHTML = document.getElementById('shippingCosts');
-const totalCostCartHTML = document.getElementById('totalCosts');
-const shipping1 = document.getElementById('shippingType1');
-const shipping2 = document.getElementById('shippingType2');
-const shipping3 = document.getElementById('shippingType3');
-const exchangeRateUYUtoUSD = 0.025;
-const exchangeRateUSDtoUSD = 1;
-let subtotalCart = 0;
-let shippingCost = 0;
-let totalCostCart = 0;
-
-
 const cartUserId = 25801;
 const apiUrl = `https://japceibal.github.io/emercado-api/user_cart/${cartUserId}.json`;
 
@@ -54,22 +41,16 @@ function consolidateCart(cart1, cart2) {
 
 function showProducts(articles) {
   const tableBodyProducts = document.getElementById('product-table-body');
-
   tableBodyProducts.innerHTML = '';
-
-  articles.forEach((product, index) => {
-    let exchangeRate = product.currency === 'UYU' ? exchangeRateUYUtoUSD : exchangeRateUSDtoUSD;
-    const subtotal = product.count * product.unitCost * exchangeRate;
-    subtotalCart += subtotal;
-
+  articles.forEach((product) => {
     let rowProduct = `
-      <tr>
+      <tr class="cart-row">
         <td><img src="${product.image}" class="img-fluid" width="65px"></td>
         <td>${product.name}</td>
-        <td>${product.unitCost} ${product.currency}</td>
-        <td><input type="number" class="count-input" value="${product.count}" min="1" data-index="${index}" data-unit-cost="${product.unitCost}" data-currency="${product.currency}"></td>
-        <td class="subtotal">${subtotal.toFixed(2)} USD</td>
-        <td><button type="button" class="btn btn-outline-danger delete-button" data-index="${index}" onclick="removeProduct(${index})">
+        <td><div class="cart-price">${product.unitCost}</div> <div class="cart-currency">${product.currency}</div></td>
+        <td><input type="number" class="count-input" value="${product.count}" min="1" data-unit-cost="${product.unitCost}" data-currency="${product.currency}"></td>
+        <td class="item-subtotal"></td>
+        <td><button type="button" class="btn btn-outline-danger delete-button">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
               <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
               <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
@@ -78,121 +59,110 @@ function showProducts(articles) {
         </td>
       </tr>
     `;
-
     tableBodyProducts.innerHTML += rowProduct;
+    updateCosts()
   });
 
-  const countInputs = document.querySelectorAll('.count-input');
-  countInputs.forEach((input) => {
-    const index = input.getAttribute('data-index');
-    const product = articles[index]; // Get the product using the index
+/////////////////////////////////////////
+/////////////REMOVE ITEMS////////////////
+/////////////////////////////////////////
 
-    input.addEventListener('input', function (event) {
-      updateCosts(event, product); // Pass the product object along with the event
-    });
-  });
-
-  subtotalCartHTML.textContent = `${parseFloat(subtotalCart).toFixed(2)} USD`;
-  updateCosts()
-}
-
-function removeProduct(index) {
-  const productIndex = parseInt(index);
-  const removedProduct = cart.splice(productIndex, 1)[0];
-  localStorage.setItem('cart', JSON.stringify(cart));
-  showProducts(cart);
-
-  // Deseleccionar todos los botones de envío
-  shipping1.checked = false;
-  shipping2.checked = false;
-  shipping3.checked = false;
-
-  // Establecer el costo de envío en 0
-  shippingCost = 0;
-
-  updateCosts();
-}
-
-
-shipping1.addEventListener('change', function () {
-  if (shipping1.checked) {
-    shippingCost = parseFloat(subtotalCart) * 0.15;
+let removeItemButton  = document.getElementsByClassName('delete-button') //me trae un array con todos los botones para eliminar los elementos
+for(let i=0; i < removeItemButton.length; i++) { //hacemos un for para recorrer el array y agregarle un event listener a c/u de los botones
+  let button = removeItemButton[i] //el boton que accedemos
+  button.addEventListener('click', function(event){  //el event listener siempre devuelve un event object adentro de la funcion que llama
+    let row = event.target.closest('tr') //el target es el boton que clickeamos, el closest seria la fila mas cercana al boton que clickeamos
+    let productName = row.querySelector('td:nth-child(2)').innerText;
+    cart = cart.filter(product => product.name !== productName); //si el nombre del producto es distinto al productName de la fila borrada, lo deja en el array cart
+    localStorage.setItem('cart', JSON.stringify(cart));
+    row.remove()
     updateCosts()
-  }
-});
-
-shipping2.addEventListener('change', function () {
-  if (shipping2.checked) {
-    shippingCost = parseFloat(subtotalCart) * 0.07;
-    updateCosts()
-  }
-});
-
-shipping3.addEventListener('change', function () {
-  if (shipping3.checked) {
-    shippingCost = parseFloat(subtotalCart) * 0.05;
-    updateCosts()
-  }
-});
-
-
-function updateSubtotal(event, product) {
-  if (event) {
-    const input = event.target;
-    const count = parseInt(input.value);
-    const unitCost = parseFloat(input.getAttribute('data-unit-cost'));
-    const currency = input.getAttribute('data-currency');
-    const subtotalElement = input.parentElement.nextElementSibling;
-
-    let exchangeRate = currency === 'UYU' ? exchangeRateUYUtoUSD : exchangeRateUSDtoUSD;
-    const subtotal = count * unitCost * exchangeRate;
-    subtotalElement.textContent = `${subtotal.toFixed(2)} USD`;
-
-    // Update the product count
-    product.count = count;
-  }
-
-  const subtotalElements = document.querySelectorAll('.subtotal');
-  subtotalCart = 0;
-  subtotalElements.forEach((element) => {
-    const itemSubtotal = parseFloat(element.textContent.split(' ')[0]);
-    subtotalCart += itemSubtotal;
-  });
-
-  subtotalCartHTML.textContent = `${parseFloat(subtotalCart).toFixed(2)} USD`;
+  })
 }
 
-function updateShipping(shippingCost) {
-  if (shipping1.checked) {
-    shippingCost = parseFloat(subtotalCart) * 0.15;
-  } else if (shipping2.checked) {
-    shippingCost = parseFloat(subtotalCart) * 0.07;
-  } else if (shipping3.checked) {
-    shippingCost = parseFloat(subtotalCart) * 0.05;
+/////////////////////////////////////////
+/////////////COUNT INPUTS////////////////
+/////////////////////////////////////////
+
+let countInputs  = document.getElementsByClassName('count-input') //me trae un array con todos los count input
+for(let i=0; i < countInputs.length; i++) { //hacemos un for para recorrer el array y agregarle un event listener a c/u de los input
+let input = countInputs[i] //el input que accedemos
+input.addEventListener('change', updateCosts) //cuando cambia la cantidad que actualice el costo
+}
+
+/////////////////////////////////////////
+/////////SHIPPING OPTIONS////////////////
+/////////////////////////////////////////
+
+let shippingOptions = document.getElementsByClassName('form-check-input') //obtenemos todas las opciones del shipping
+for(let i=0; i < shippingOptions.length; i++) {  //accedemos a c/u de las opciones
+  let shippingOption = shippingOptions[i]
+  shippingOption.addEventListener('change', updateCosts) //si cambia una de las opciones, actualizamos los costos
+}
+}
+
+function updateCosts(){
+
+/////////////////////////////////////////
+/////////////////SUBTOTAL////////////////
+/////////////////////////////////////////
+
+  let cartRows = document.getElementsByClassName('cart-row') //obtenemos todas las filas del carrito
+  let subtotal = 0
+  const exchangeRateUYUtoUSD = 0.025;
+  const exchangeRateUSDtoUSD = 1;
+  for(let i=0; i < cartRows.length; i++) {  //accedemos a c/u de las filas para calcular el subtotal del item
+    let cartRow = cartRows[i] 
+    let priceElement = cartRow.getElementsByClassName('cart-price')[0]
+    let quantityElement = cartRow.getElementsByClassName('count-input')[0]
+    let currencyElement = cartRow.getElementsByClassName('cart-currency')[0]
+    let price = parseFloat(priceElement.innerText) //el precio unitario del item
+    let quantity = quantityElement.value //la cantidad que hay en el input
+    let exchangeRate = currencyElement.innerText === 'UYU' ? exchangeRateUYUtoUSD : exchangeRateUSDtoUSD; //el cambio a usar
+    subtotal = subtotal + (price*quantity*exchangeRate) //calculamos el subtotal para cada elemento del carrito y lo agregamos al subtotal general
+    let subtotalElement = cartRow.getElementsByClassName('item-subtotal')[0]
+    subtotalElement.innerHTML = (price*quantity*exchangeRate).toFixed(2) + ' USD'
+    }
+    let cartSubtotal = document.getElementById('cartSubtotal')
+    cartSubtotal.innerHTML = subtotal.toFixed(2) + ' USD'
+
+/////////////////////////////////////////
+/////////////////SHIPPING////////////////
+/////////////////////////////////////////
+
+  let shippingOptions = document.getElementsByClassName('form-check-input') //obtenemos todas las opciones del shipping
+  let shipping = 0
+  for(let i=0; i < shippingOptions.length; i++) {  //accedemos a c/u de las opciones
+  let shippingOption = shippingOptions[i]
+  if (shippingOption.checked) {  //si esta marcada, vemos que id tiene la opcion y calculamos el shipping acorde
+    if (shippingOption.id === 'shippingType1') {
+      shipping = shipping + subtotal * 0.15;
+    } else if (shippingOption.id === 'shippingType2') {
+      shipping = shipping + subtotal * 0.07;
+    } else if (shippingOption.id === 'shippingType3') {
+      shipping = shipping + subtotal * 0.05;
+    }
   }
-  shippingCostCartHTML.textContent = `${shippingCost.toFixed(2)} USD`;
 }
+let cartShipping = document.getElementById('shippingCosts')
+cartShipping.innerHTML = shipping.toFixed(2) + ' USD'
 
-function updateTotal() {
-  totalCostCart = subtotalCart + shippingCost;
-  totalCostCartHTML.textContent = `${totalCostCart.toFixed(2)} USD`;
-}
+/////////////////////////////////////////
+//////////////COSTO TOTAL////////////////
+/////////////////////////////////////////
 
-function updateCosts(event, product) {
-  updateSubtotal(event, product);
-  updateShipping(shippingCost);
-  updateTotal();
-}
+  let total = subtotal + shipping
+  let cartTotal = document.getElementById('totalCosts')
+  cartTotal.innerHTML = total.toFixed(2) + ' USD'
+}  
+
 
 const cleanCart = document.getElementById('cleanCart');
 cleanCart.addEventListener('click', () => {
   const tableBodyProducts = document.getElementById('product-table-body');
   tableBodyProducts.innerHTML = '';
-  subtotalCartHTML.textContent = '';
-  shippingCostCartHTML.textContent = '';
-  totalCostCartHTML.textContent = '';
-
   localStorage.removeItem('cart');
+  updateCosts()
 });
 
 function PaymentMethod() {
