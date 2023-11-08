@@ -92,9 +92,9 @@ if (isDarkMode) {
   colorModeButton.innerText = "Cambiar a Light";
 }
 
-colorModeButton.addEventListener("click", cambiarModoColor);
+colorModeButton.addEventListener("click", changeColorMode);
 
-function cambiarModoColor() {
+function changeColorMode() {
   body.classList.toggle("dark-mode");
 
   // Guardar el estado del modo de color en localStorage
