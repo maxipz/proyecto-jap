@@ -34,24 +34,31 @@ document.getElementById('saveProfile').addEventListener('click', (e) => {
     }
 });
 
-// Al seleccionar una imagen, agregarla al container y reemplazar el placeholder por la nueva imagen
-document.getElementById("profileImgInput").addEventListener("change", function (event) {
-  const profileImg = document.getElementById("profileImg"); // Usado para mostrar la vista previa de la imagen
+//////////////////////////////////////////////
+///////////// IMAGEN DE PERFIL////////////////
+//////////////////////////////////////////////
 
-  if (event.target.files.length > 0) {
-    const selectedImage = event.target.files[0];    
-    const imageURL = URL.createObjectURL(selectedImage); // Crear una URL única que apunta a la imagen seleccionada y almacenarla en la variable imageURL
-    
-    // Guardar la URL de la imagen en localStorage bajo la clave "profileDataImg"
-    localStorage.setItem('profileDataImg', imageURL);
+const profileImg = document.getElementById("profileImg");
+const storedImage = localStorage.getItem('profileDataImg');
 
-    // Establecer el tamaño máximo de la imagen en la vista previa
-    profileImg.style.maxWidth = "150px";
-    profileImg.style.maxHeight = "200px";
-    profileImg.src = imageURL;
+if (storedImage) {  //Si hay una imagen en localstorage muestra esa, si no muestra el placeholder
+  profileImg.src = storedImage;
+} else {
+  profileImg.src = "img/img_perfil.png";
+}
 
-  } else {
-    profileImg.src = "img/img_perfil.png";
+document.getElementById("profileImgInput").addEventListener("change", function(event) {
+  const selectedImage = event.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = function(event) { //convierte la imagen en bits
+    const imageInBits = event.target.result;
+    localStorage.setItem('profileDataImg', imageInBits);
+    profileImg.src = imageInBits;
+  };
+
+  if (selectedImage) {
+    reader.readAsDataURL(selectedImage);
   }
 });
 
