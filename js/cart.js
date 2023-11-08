@@ -132,15 +132,18 @@ function updateCosts(){
 
   let shippingOptions = document.getElementsByClassName('form-check-input') //obtenemos todas las opciones del shipping
   let shipping = 0
+  let shippingOption1Percentage = 0.15
+  let shippingOption2Percentage = 0.07
+  let shippingOption3Percentage = 0.05
   for(let i=0; i < shippingOptions.length; i++) {  //accedemos a c/u de las opciones
   let shippingOption = shippingOptions[i]
   if (shippingOption.checked) {  //si esta marcada, vemos que id tiene la opcion y calculamos el shipping acorde
     if (shippingOption.id === 'shippingType1') {
-      shipping = shipping + subtotal * 0.15;
+      shipping = shipping + subtotal * shippingOption1Percentage;
     } else if (shippingOption.id === 'shippingType2') {
-      shipping = shipping + subtotal * 0.07;
+      shipping = shipping + subtotal * shippingOption2Percentage;
     } else if (shippingOption.id === 'shippingType3') {
-      shipping = shipping + subtotal * 0.05;
+      shipping = shipping + subtotal * shippingOption3Percentage;
     }
   }
 }

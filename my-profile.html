@@ -9,22 +9,6 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link rel="icon" href="img/logo.jpg" type="image/png">
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
 </head>
 
 <body>
@@ -63,8 +47,77 @@
   </nav>
   <main>
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+      <div class="row mt-5">
+        <h3>Perfil</h3>
+      </div>
+      <hr class="mt-5 mb-5">
+      <div class="row mb-5">
+        <form id="profile" class="needs-validation" novalidate>
+          <div class="container" id="option-card">
+            <div class="row row-cols-2">
+
+              <div class="col mb-4">
+                <label for="firstName">Primer Nombre *</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" required>
+                <div class="valid-feedback">
+                  Es correcto!
+                </div>
+                <div class="invalid-feedback">
+                  Ingrese su primer nombre.
+                </div>
+              </div>
+
+              <div class="col">
+                <label for="secondName">Segundo Nombre</label>
+                <input type="text" class="form-no-validate" id="secondName" name="secondName" >
+              </div>
+
+              <div class="col mb-4">
+                <label for="firstSurname">Primer Apellido *</label>
+                <input type="text" class="form-control" id="firstSurname" name="firstSurname" required>
+                <div class="valid-feedback">
+                  Es correcto!
+                </div>
+                <div class="invalid-feedback">
+                  Ingrese su primer apellido.
+                </div>
+              </div>
+
+              <div class="col">
+                <label for="secondSurname">Segundo Apellido</label>
+                <input type="text" class="form-no-validate" id="secondSurname" name="secondSurname">
+              </div>
+
+              <div class="col mb-4">
+                <label for="email">Email *</label>
+                <input type="text" class="form-control" id="email" name="email" required>
+                <div class="valid-feedback">
+                  Es correcto!
+                </div>
+                <div class="invalid-feedback">
+                  Ingrese un Email valido.
+                </div>
+              </div>
+
+              <div class="col">
+                <input type="file" class="form-no-validate" id="addImage" aria-describedby="addImage">
+              </div>
+
+              <div class="col">
+                <label for="phoneNumber">Telefono de contacto</label>
+                <input type="text" class="form-no-validate" id="phoneNumber" name="phoneNumber">
+              </div>
+
+            </div>
+          </div>
+          <hr class="mt-5 mb-4">
+          <div class="col d-flex align-items-center mt-3">
+            <button type="button" class="btn btn-primary btn-sm float-end" id="saveProfile">
+              Guardar Cambios
+              <i class="fas fa-arrow-right ps-3"></i>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </main>
