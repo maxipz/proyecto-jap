@@ -24,7 +24,11 @@ document.getElementById('saveProfile').addEventListener('click', (e) => {
         // Guardar los datos en localStorage como cadena JSON bajo la clave "profileData"
         localStorage.setItem('profileData', JSON.stringify(formData));
 
-        alert('Los datos son válidos y se han guardado en el almacenamiento local.');
+        const alert = document.getElementById('successAlert');
+        alert.classList.remove('d-none');
+        setTimeout(function() {
+          alert.classList.add('d-none');
+        }, 3000);
     } else {
         form.classList.add('was-validated'); // Marcar los campos inválidos en el formulario
     }

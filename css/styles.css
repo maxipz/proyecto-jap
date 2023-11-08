@@ -189,6 +189,19 @@ a.custom-card:hover {
 
 /* L O G I N */
 
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Fondo semi-transparente */
+  z-index: 9999; /* Asegura que esté por encima de otros elementos */
+  display: none; /* Inicialmente oculto */
+  pointer-events: auto; /* Evita la interacción con elementos debajo del overlay */
+}
+
+
 .login {
   margin: 0;
   padding: 0;
