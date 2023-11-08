@@ -424,8 +424,6 @@ a.custom-card:hover {
   font-size: 1.4rem;
 }
 
-
-/* no validate */
 .form-no-validate {
   display: block;
   width: 100%;
@@ -442,6 +440,7 @@ a.custom-card:hover {
   appearance: none;
   border-radius: 0.25rem;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
 }
 
 
@@ -450,3 +449,5 @@ a.custom-card:hover {
   max-width: 150px; /* Ancho máximo de la imagen */
   max-height: 150px; /* Alto máximo de la imagen */
 }
+
+
