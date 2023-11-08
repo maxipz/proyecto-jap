@@ -253,7 +253,7 @@ a.custom-card:hover {
   font-weight: 100;
 }
 
-.login-box input[type="text"], .login-box input[type="password"] {
+.login-box input[type="text"], .login-box input[type="password"], .login-box input[type="email"] {
   border: none;
   border-bottom: 1px solid #fff;
   background: transparent;
