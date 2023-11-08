@@ -58,7 +58,11 @@ function getInfo(ID) {
         localStorage.setItem('cart', JSON.stringify(cart));
 
         // Muestra una confirmación al usuario
-        alert('¡Producto agregado con éxito al carrito!');
+        const alert = document.getElementById('successAlert');
+        alert.classList.remove('d-none');
+        setTimeout(function() {
+          alert.classList.add('d-none');
+        }, 2000);
       });
 
 

@@ -229,6 +229,9 @@ function PaymentMethod() {
     }
     if (valid) {
       alert.classList.remove('d-none');
+      setTimeout(function() {
+        alert.classList.add('d-none');
+      }, 2000);
     }
   });
 }
