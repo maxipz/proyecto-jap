@@ -1,43 +1,7 @@
-const cartUserId = 25801;
-const apiUrl = `https://japceibal.github.io/emercado-api/user_cart/${cartUserId}.json`;
 
-let cart = [];
 
-fetch(apiUrl)
-  .then((response) => response.json())
-  .then((data) => {
-    const preselectedProduct = data.articles;
-    const localStorageProducts = JSON.parse(localStorage.getItem('cart')) || [];
-    cart = consolidateCart(preselectedProduct, localStorageProducts);
-    showProducts(cart);
-  })
-  .catch((error) => {
-    console.error('Hubo un error al realizar la solicitud:', error);
-  });
-
-function consolidateCart(cart1, cart2) {
-  const consolidatedCart = [];
-
-  for (const product of cart1) {
-    const existingProduct = consolidatedCart.find(p => p.name === product.name);
-    if (existingProduct) {
-      existingProduct.count += product.count;
-    } else {
-      consolidatedCart.push({ ...product });
-    }
-  }
-
-  for (const product of cart2) {
-    const existingProduct = consolidatedCart.find(p => p.name === product.name);
-    if (existingProduct) {
-      existingProduct.count += product.count;
-    } else {
-      consolidatedCart.push({ ...product });
-    }
-  }
-
-  return consolidatedCart;
-}
+let cart = JSON.parse(localStorage.getItem('cart')) || []
+showProducts(cart);
 
 function showProducts(articles) {
   const tableBodyProducts = document.getElementById('product-table-body');
@@ -175,6 +139,7 @@ function PaymentMethod() {
   const option1Texts = document.querySelectorAll('#option-card input');
   const payMethod = document.getElementById('method');
   const alert = document.getElementById('successAlert');
+  const errorAlert = document.getElementById('errorAlert');
   const forms = document.getElementsByClassName('needs-validation');
 
   function radioChange() {
@@ -202,6 +167,11 @@ function PaymentMethod() {
     }
     if (valid) {
       alert.classList.remove('d-none');
+    }
+    let cart = localStorage.getItem('cart')
+    if (cart === '[]') {
+      console.log('carrito vacio')
+      errorAlert.classList.remove('d-none');
     }
   });
 }

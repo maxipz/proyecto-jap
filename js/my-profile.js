@@ -1,3 +1,8 @@
+//Carga el email del localstorage y lo agrega al input Email
+const email = localStorage.getItem("username")
+const emailInput = document.getElementById('email')
+emailInput.value = email
+
 // Obtener el formulario por su ID
 const form = document.getElementById('profile');
 
@@ -25,22 +30,6 @@ document.getElementById('saveProfile').addEventListener('click', (e) => {
     }
 });
 
-// Función para manejar el cambio de la imagen
-function changeImg () {
-  const imageInput = document.getElementById("profileImg");
-  const imagePreview = document.getElementById("image-preview");
-
-  imageInput.addEventListener("change", () => {
-      const file = imageInput.files[0];
-      if (file) {
-          imagePreview.style.display = "block";
-          imagePreview.src = URL.createObjectURL(file);
-      } 
-  });
-}
-
-changeImg();
-
 // Al seleccionar una imagen, agregarla al container y reemplazar el placeholder por la nueva imagen
 document.getElementById("profileImgInput").addEventListener("change", function (event) {
   const profileImg = document.getElementById("profileImg"); // Usado para mostrar la vista previa de la imagen
@@ -62,6 +51,7 @@ document.getElementById("profileImgInput").addEventListener("change", function (
   }
 });
 
+
 // Función para cargar los datos del formulario
 function profileData() {
   // Recuperar datos almacenados en localStorage bajo la clave "profileData"
@@ -79,19 +69,5 @@ function profileData() {
 }
 
 profileData();
-
-// Función para cargar la imagen del almacenamiento local
-function loadProfileImage() {
-  const profileImg = document.getElementById("profileImg");
-  const storedImage = localStorage.getItem('profileDataImg');
-  
-  if (storedImage) {
-      profileImg.style.maxWidth = "150px";
-      profileImg.style.maxHeight = "200px";
-      profileImg.src = storedImage;
-  }
-}
-
-loadProfileImage();
 
     
