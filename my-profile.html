@@ -30,14 +30,17 @@
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
           <div class="dropdown">
-            <a class="nav-link dropdown-toggle" type="button" id="userbutton" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" type="button" id="userbutton" data-bs-toggle="dropdown"
+              aria-expanded="false">
               Inicia sesión
-            </a> 
+            </a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <li><a class="dropdown-item" href="cart.html">Mi Carrito</a></li>
               <li><a class="dropdown-item" href="my-profile.html">Mi Perfil</a></li>
               <li><a class="dropdown-item" href="#" id="logOut">Cerrar sesión</a></li>
-              <li><hr class="dropdown-divider"></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
               <li><button id="color-mode" class="btn">Cambiar a Dark</button></li>
             </ul>
           </div>
@@ -48,12 +51,19 @@
   <main>
     <div class="container">
       <div class="row mt-5">
-        <h3>Perfil</h3>
+
+        <h1 class="col-9">Perfil</h1>
+        <div class="col-3 form-group"> <!-- Contenedor donde muestra imagen-->
+          <div id="imageContainer" class="d-flex align-items-center justify-content-center">
+            <img id="profileImg" src="img/img_perfil.png" class="img-fluid img-sm">
+          </div>
+        </div> <!-- Termina aca -->
+
       </div>
       <hr class="mt-5 mb-5">
       <div class="row mb-5">
         <form id="profile" class="needs-validation" novalidate>
-          <div class="container" id="option-card">
+          <div class="container">
             <div class="row row-cols-2">
 
               <div class="col mb-4">
@@ -67,10 +77,12 @@
                 </div>
               </div>
 
+            
               <div class="col">
                 <label for="secondName">Segundo Nombre</label>
-                <input type="text" class="form-no-validate" id="secondName" name="secondName" >
+                <input type="text" class="form-no-validate" id="secondName" name="secondName">
               </div>
+            
 
               <div class="col mb-4">
                 <label for="firstSurname">Primer Apellido *</label>
@@ -95,24 +107,29 @@
                   Es correcto!
                 </div>
                 <div class="invalid-feedback">
-                  Ingrese un Email valido.
+
+                  Ingrese un Email válido.
+
                 </div>
               </div>
 
               <div class="col">
-                <input type="file" class="form-no-validate" id="addImage" aria-describedby="addImage">
-              </div>
 
+                <label for="profileImgInput">Seleccionar imagen</label>
+                <input type="file" class="selectImg form-no-validate" id="profileImgInput" accept="image/*">
+              </div>
+              
               <div class="col">
-                <label for="phoneNumber">Telefono de contacto</label>
+                <label for="phoneNumber">Teléfono de contacto</label>
                 <input type="text" class="form-no-validate" id="phoneNumber" name="phoneNumber">
               </div>
-
             </div>
+            
           </div>
           <hr class="mt-5 mb-4">
           <div class="col d-flex align-items-center mt-3">
-            <button type="button" class="btn btn-primary btn-sm float-end" id="saveProfile">
+            <button type="button" class="btn btn-primary btn-lg float-end" id="saveProfile">
+
               Guardar Cambios
               <i class="fas fa-arrow-right ps-3"></i>
             </button>
@@ -126,7 +143,8 @@
       <p class="float-end">
         <a href="#">Volver arriba</a>
       </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+      </p>
     </div>
   </footer>
   <script src="js/bootstrap.bundle.min.js"></script>
