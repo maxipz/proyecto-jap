@@ -1,49 +1,96 @@
-// validacion formulario 
 const form = document.getElementById('profile');
 
+// Evento de click en el botón "Guardar Perfil"
 document.getElementById('saveProfile').addEventListener('click', (e) => {
-    e.preventDefault()
-    let valid = true;
-      if (!form.checkValidity()) {
-        valid = false;
-      }
-      form.classList.add('was-validated');
-    if (valid) {
-      alert.classList.remove('d-none');
+    e.preventDefault();
+
+    if (form.checkValidity()) {
+        const formData = {}; // Objeto para almacenar los datos del formulario
+
+        // Recorre los elementos del formulario y guarda los valores en formData
+        for (const element of form.elements) {
+            if (element.name) { // Verifica si el elemento tiene un nombre (para evitar elementos sin nombre)
+                formData[element.name] = element.value;
+            }
+        }
+
+        // Guarda los datos en localStorage como cadena JSON
+        localStorage.setItem('profileData', JSON.stringify(formData));
+
+        alert('Los datos son válidos y se han guardado en el almacenamiento local.');
+    } else {
+        form.classList.add('was-validated'); // Marca los campos inválidos en el formulario
     }
-  });
-
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const imageInput = document.getElementById("profileImg");
-    const imagePreview = document.getElementById("image-preview");
-
-    imageInput.addEventListener("change", () => {
-        const file = imageInput.files[0];
-        if (file) {
-            imagePreview.style.display = "block";
-            imagePreview.src = URL.createObjectURL(file);
-        } 
-    });
 });
+
+function changeImg () {
+  const imageInput = document.getElementById("profileImg");
+  const imagePreview = document.getElementById("image-preview");
+
+  imageInput.addEventListener("change", () => {
+      const file = imageInput.files[0];
+      if (file) {
+          imagePreview.style.display = "block";
+          imagePreview.src = URL.createObjectURL(file);
+      } 
+  });
+};
+
+changeImg ();
 
 // Al seleccionar una imagen que se agregue a un container y remplaze el placeholder por la nueva imagen
 document.getElementById("profileImgInput").addEventListener("change", function (event) {
-  const selectImg = document.querySelector("selectImg");    // lo utilizaremos para mostrar el nombre del archivo seleccionado
-  const profileImg = document.getElementById("profileImg");  // lo usamos para mostrar la vista previa de la imagen
+const profileImg = document.getElementById("profileImg");  // lo usamos para mostrar la vista previa de la imagen
 
-  if (event.target.files.length > 0) {
-    const selectedImage = event.target.files[0];    
-    const imageURL = URL.createObjectURL(selectedImage); // Crear una URL única que apunta a la imagen seleccionada y almacenarla en la variable imageURL
+if (event.target.files.length > 0) {
+  const selectedImage = event.target.files[0];    
+  const imageURL = URL.createObjectURL(selectedImage);  // Crear una URL única que apunta a la imagen seleccionada y almacenarla en la variable imageURL
+  localStorage.setItem('profileDataImg', imageURL);
 
-    // Establecer el tamaño máximo de la imagen en la vista previa
-    profileImg.style.maxWidth = "150px";
-    profileImg.style.maxHeight = "200px";
-    
-    profileImg.src = imageURL;
-    selectImg.innerText = selectedImage.name;
-  } else {
-    profileImg.src = "img/img_perfil.png";
-    
-  }
+  // Establecer el tamaño máximo de la imagen en la vista previa
+  profileImg.style.maxWidth = "150px";
+  profileImg.style.maxHeight = "200px";
+  profileImg.src = imageURL;
+
+} else {
+  profileImg.src = "img/img_perfil.png";
+  
+}
+
 });
+
+function profileData(){
+  // Recupera datos almacenados en localStorage bajo la clave "profileData"
+const storedData = localStorage.getItem('profileData');
+if (storedData) {
+    const parsedData = JSON.parse(storedData);
+
+    // Llena los campos del formulario con los datos recuperados
+    for (const element of form.elements) {
+        if (element.name && parsedData[element.name]) {
+            element.value = parsedData[element.name];
+        }
+    }
+}
+}
+profileData();
+
+function loadProfileImage() {
+  const profileImg = document.getElementById("profileImg");
+  const storedImage = localStorage.getItem('profileDataImg');
+  
+  if (storedImage) {
+      profileImg.style.maxWidth = "150px";
+      profileImg.style.maxHeight = "200px";
+      profileImg.src = storedImage;
+  }
+}
+
+// Llama a la función para cargar la imagen al cargar la página
+loadProfileImage();
+
+
+    
+
+    
+   
