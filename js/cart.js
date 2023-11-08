@@ -168,7 +168,7 @@ cleanCart.addEventListener('click', () => {
   updateCosts()
 });
 
-function PaymentMethod() {
+function paymentMethod() {
   const option1Radio = document.getElementById('option1');
   const option2Radio = document.getElementById('option2');
   const option2Text = document.getElementById('account-number');
