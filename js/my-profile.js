@@ -27,7 +27,7 @@ document.getElementById('saveProfile').addEventListener('click', (e) => {
         const alert = document.getElementById('successAlert');
         alert.classList.remove('d-none');
         setTimeout(function() {
-          alert.classList.add('d-none');
+          alert.classList.add('d-none');    // Despues de 3 segundos le agrega el d-none para ocultar el alert
         }, 3000);
     } else {
         form.classList.add('was-validated'); // Marcar los campos inválidos en el formulario
