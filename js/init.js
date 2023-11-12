@@ -78,17 +78,44 @@ logOut.addEventListener("click", function () {
   window.location.href = "index.html";
 });
 
-
 // Cambiar el Background de la pagina
 const colorModeButton = document.querySelector('#color-mode');
 const body = document.body;
-
 // Recuperar el estado del modo de color desde localStorage (si existe)
 const isDarkMode = localStorage.getItem('darkMode') === 'true';
+const modals = document.querySelectorAll('.modal-content');
+const tables = document.querySelectorAll('.table');
+const subtotal = document.getElementById('subtotal');
+const shipping = document.getElementById('shipping');
+const total = document.getElementById('total');
+const totalCosts = document.getElementById('totalCosts');
+//Texto "Arrastra tus fotos aqui" ventas
+const textSells = document.querySelectorAll('.dz-message');
 
 // Inicializar el modo de color según lo que se encuentra en localStorage
 if (isDarkMode) {
   body.classList.add("dark-mode");
+  modals.forEach((modal) => {
+    modal.classList.add('dark-mode');
+  });
+  textSells.forEach((textSell) => {
+    textSell.classList.add('text-dark');
+  });
+  tables.forEach((table) => {
+    table.classList.add('text-white');
+  });
+  if (subtotal){
+    subtotal.classList.add('text-dark');
+  }
+  if (shipping){
+    shipping.classList.add('text-dark');
+  }
+  if (total){
+    total.classList.add('text-dark');
+  }
+  if (totalCosts){
+    totalCosts.classList.add('text-dark');
+  }
   colorModeButton.innerText = "Cambiar a Light";
 }
 
@@ -96,7 +123,27 @@ colorModeButton.addEventListener("click", changeColorMode);
 
 function changeColorMode() {
   body.classList.toggle("dark-mode");
-
+  modals.forEach((modal) => {
+    modal.classList.toggle('dark-mode');
+  });
+  textSells.forEach((textSell) => {
+    textSell.classList.toggle('text-dark');
+  });
+  tables.forEach((table) => {
+    table.classList.toggle('text-white');
+  });
+  if (subtotal){
+    subtotal.classList.toggle('text-dark');
+  }
+  if (shipping){
+    shipping.classList.toggle('text-dark');
+  }  
+  if (total){
+    total.classList.toggle('text-dark');
+  }
+  if (totalCosts){
+    totalCosts.classList.toggle('text-dark');
+  }
   // Guardar el estado del modo de color en localStorage
   localStorage.setItem('darkMode', body.classList.contains("dark-mode"));
 
@@ -106,4 +153,3 @@ function changeColorMode() {
     colorModeButton.innerText = "Cambiar a Dark";
   }
 }
-

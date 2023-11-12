@@ -1,5 +1,3 @@
-
-
 let cart = JSON.parse(localStorage.getItem('cart')) || []
 showProducts(cart);
 
@@ -179,4 +177,4 @@ function paymentMethod() {
   });
 }
 
-PaymentMethod();
+paymentMethod();
