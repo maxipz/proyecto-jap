@@ -5,7 +5,7 @@ window.onload = function () {
 };
 
 function getInfo(ID) {
-  const url = `https://japceibal.github.io/emercado-api/products/${ID}.json`;
+  const url = `http://localhost:3000/products/${ID}`;
   fetch(url)
     .then((response) => response.json())
     .then((result) => {
@@ -190,7 +190,7 @@ const seconds = String(currentDate.getSeconds()).padStart(2, "0");
 const formattedDate = ` ${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
 function getComments(ID) {
-  const url = `https://japceibal.github.io/emercado-api/products_comments/${ID}.json`;
+  const url = `http://localhost:3000/products_comments/${ID}`;
 
   fetch(url)
     .then((response) => response.json())
