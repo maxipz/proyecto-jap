@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-const fs = require('fs'); 
+const fs = require('fs');
+const jwt = require("jsonwebtoken");
+const SECRET_KEY = "CLAVE SECRETA PROYECTO";
 
 const app = express();
 const port = 3000;
@@ -20,6 +22,29 @@ const productsCommentsFolderPath = './basededatos/products_comments/';
 app.get("/", (req, res) => {
   res.send("<h1>Bienvenid@ al servidor</h1>");
 });
+
+// Auth
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+  if (username === "adminProyecto" && password === "adminProyecto") {
+    const token = jwt.sign({ username }, SECRET_KEY);
+    res.status(200).json({ token });
+  } else {
+    res.status(401).json({ message: "Usuario y/o contraseña incorrecto" });
+  }
+});
+
+// Middleware que autoriza a realizar peticiones a /users
+app.use("/cart", (req, res, next) => {
+  try {
+    const decoded = jwt.verify(req.headers["access-token"], SECRET_KEY);
+    console.log(decoded);
+    next();
+  } catch (err) {
+    res.status(401).json({ message: "Usuario no autorizado" });
+  }
+});
+//---
 
 app.get('/cats', (req, res) => {
   res.json(cats);
