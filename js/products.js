@@ -54,7 +54,7 @@
   }
 
   function loadProductData(catID) {
-    const url = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
+    const url = `http://localhost:3000/cats_products/${catID}`;
     fetch(url)
       .then(response => response.json())
       .then(result => {

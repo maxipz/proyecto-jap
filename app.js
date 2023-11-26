@@ -37,6 +37,25 @@ app.get('/userCart', (req, res) => {
   res.json(userCart);
 });
 
+app.get('/cats_products', (req, res) => {
+  try {
+    const files = fs.readdirSync(catsProductsFolderPath);
+    
+    // Leer cada archivo JSON de forma síncrona y parsearlo
+    const products = files.filter(file => file.endsWith('.json'))
+      .map(file => {
+        const filePath = catsProductsFolderPath + file;
+        const data = fs.readFileSync(filePath, 'utf-8');
+        return JSON.parse(data);
+      });
+    res.json(products);
+
+  } catch (err) {
+    console.error('Error al leer la carpeta:', err);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
 app.get('/cats_products/:cat_id', (req, res) => {
   try {
     const catId = req.params.cat_id;  // Asegúrate de usar el mismo nombre de parámetro que en la ruta
@@ -53,7 +72,24 @@ app.get('/cats_products/:cat_id', (req, res) => {
   }
 });
 
+app.get('/products', (req, res) => {
+  try {
+    const files = fs.readdirSync(productsFolderPath);
+    
+    // Leer cada archivo JSON de forma síncrona y parsearlo
+    const products = files.filter(file => file.endsWith('.json'))
+      .map(file => {
+        const filePath = productsFolderPath + file;
+        const data = fs.readFileSync(filePath, 'utf-8');
+        return JSON.parse(data);
+      });
+    res.json(products);
 
+  } catch (err) {
+    console.error('Error al leer la carpeta de productos:', err);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
 
 app.get('/products/:productId', (req, res) => {
   try {
@@ -71,6 +107,24 @@ app.get('/products/:productId', (req, res) => {
   }
 });
 
+app.get('/products_comments', (req, res) => {
+  try {
+    const files = fs.readdirSync(productsCommentsFolderPath);
+    
+    // Leer cada archivo JSON de forma síncrona y parsearlo
+    const comments = files.filter(file => file.endsWith('.json'))
+      .map(file => {
+        const filePath = productsCommentsFolderPath + file;
+        const data = fs.readFileSync(filePath, 'utf-8');
+        return JSON.parse(data);
+      });
+    res.json(comments);
+
+  } catch (err) {
+    console.error('Error al leer la carpeta de comentarios de productos:', err);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
 
 app.get('/products_comments/:comment_id', (req, res) => {
   try {
@@ -87,7 +141,6 @@ app.get('/products_comments/:comment_id', (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
-
 
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
