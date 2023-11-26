@@ -3,6 +3,15 @@ const cors = require("cors");
 const fs = require('fs');
 const jwt = require("jsonwebtoken");
 const SECRET_KEY = "CLAVE SECRETA PROYECTO";
+const mariadb = require("mariadb");
+
+const pool = mariadb.createPool({
+  host: "localhost",
+  user: "root",
+  password: "1234",
+  database: "cart",
+  connectionLimit: 5,
+});
 
 const app = express();
 const port = 3000;
@@ -50,8 +59,20 @@ app.get('/cats', (req, res) => {
   res.json(cats);
 });
 
-app.get('/cart', (req, res) => {
-  res.json(cart);
+app.get("/cart", async (req, res) => {
+  let conn;
+  try {
+    conn = await pool.getConnection();
+    const rows = await conn.query(
+      "SELECT id, name, count, unitCost, currency, image FROM products"
+    );
+
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ message: "Se rompió el servidor" });
+  } finally {
+    if (conn) conn.release(); //release to pool
+  }
 });
 
 app.get('/sell', (req, res) => {
@@ -164,6 +185,24 @@ app.get('/products_comments/:comment_id', (req, res) => {
   } catch (err) {
     console.error('Error al leer el archivo de comentarios de productos:', err);
     res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.post("/cart", async (req, res) => {
+  let conn;
+  try {
+    conn = await pool.getConnection();
+    const response = await conn.query(
+      `INSERT INTO products(name, count, unitCost, currency, image) VALUE(?, ?, ?, ?, ?)`,
+      [req.body.name, req.body.count, req.body.unitCost, req.body.currency, req.body.image]
+    );
+
+    res.json({ id: parseInt(response.insertId), ...req.body });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Se rompió el servidor" });
+  } finally {
+    if (conn) conn.release(); //release to pool
   }
 });
 
