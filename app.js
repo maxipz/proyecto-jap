@@ -174,7 +174,7 @@ app.get('/products_comments', (req, res) => {
 
 app.get('/products_comments/:comment_id', (req, res) => {
   try {
-    const commentId = req.params.comment_id;  // Asegúrate de usar el mismo nombre de parámetro que en la ruta
+    const commentId = req.params.comment_id;  
     const filePath = `${productsCommentsFolderPath}${commentId}.json`;
     
     // Leer el archivo JSON de forma síncrona y parsearlo
