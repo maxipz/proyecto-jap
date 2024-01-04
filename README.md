@@ -20,6 +20,7 @@
 ## People who participate in this project
 
 ### Project from Group 1 - https://github.com/maxipz/proyecto-jap
+### Page - https://maxipz.github.io/proyecto-jap/
 
 The main branch represents the frontend aspect of the project, whereas the secondary branch encompasses the backend components, incorporating technologies such as node.js, express, MariaDB, and jsonwebtoken.
 
@@ -50,6 +51,7 @@ Group 1: Maximiliano Pereyra, Carlo Peña, Alejandro Erburo, Abigail Algibar, La
 ## Personas que participan en este proyecto
 
 ### Proyecto del Grupo 1 - https://github.com/maxipz/proyecto-jap
+### Página - https://maxipz.github.io/proyecto-jap/
 
 La rama principal representa la parte frontal (frontend) del proyecto, mientras que la rama secundaria abarca los componentes del backend, incorporando tecnologías como node.js, express, MariaDB y jsonwebtoken.
 
